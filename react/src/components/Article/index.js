@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Header, PanelArticle } from '../../helpers/theme'
-import logo from '../../images/pobrane.jpg'
 import Truncate from 'react-truncate-html';
 
 
@@ -26,10 +25,6 @@ class Article extends Component {
 
     convertToHtml = (text) => {
         return { __html: text };
-    }
-
-    componentDidMount() {
-        console.log(this.convertToHtml(this.props.body).__html)
     }
 
     render() {

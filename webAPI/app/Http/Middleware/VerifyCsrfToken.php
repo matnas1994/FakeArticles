@@ -30,6 +30,7 @@ class VerifyCsrfToken extends Middleware
         'password/email',
         'password/reset',
         'comment',
+        'broadcasting/auth',
         'comment/*'
     ];
 }

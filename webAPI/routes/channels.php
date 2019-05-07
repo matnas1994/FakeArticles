@@ -15,6 +15,10 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('order.{orderId}', function ($user, $articleId) {
-    return $user->id === \App\Article::findOrNew($articleId)->user_id;
+Broadcast::channel('testChannel', function () {
+    return true;
+});
+
+Broadcast::channel('article.comment.{article}', function () {
+    return true;
 });

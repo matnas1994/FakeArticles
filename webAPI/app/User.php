@@ -94,6 +94,7 @@ class User extends Authenticatable
         return 'App.User.' . $this->id;
     }
 
+
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new MailResetPasswordToken($token));

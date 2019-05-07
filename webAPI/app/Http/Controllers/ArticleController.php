@@ -21,8 +21,7 @@ class ArticleController extends Controller
         $image = new Image(['url' => $request->url]);
         $article = Article::create($request->all()+ ['user_id' => Auth::user()->id]);
         $article->image()->save($image);
-        $article = Article::with('user','image')->findOrFail($article->id);
-        return response()->json($article, 201);
+        return response()->json(Article::with('user','image')->findOrFail($article->id), 201);
     }
 
     public function update(Request $request, Article $article){

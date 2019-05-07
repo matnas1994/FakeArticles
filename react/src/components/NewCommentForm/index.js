@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from '../../images/photo.jpg'
 import styled from 'styled-components'
+import { Formik } from 'formik'
+import { create } from '../../helpers/CommentApi'
 
 const UserImg = styled.img`
     border-radius: 50%;
@@ -30,13 +32,32 @@ const ButtonComment = styled.button`
     }
 `
 
-export const NewCommentForm = () =>
-    <div className="row">
-        <div className="col-sm-1" >
-            <UserImg src={logo} alt="Logo" />
-        </div>
-        <div className="col-sm-10" >
-            <InputComment name="comment" placeholder="Add comment" />
-        </div>
-        <div className="col-sm-1"><ButtonComment><i className="fas fa-plus-circle"></i></ButtonComment></div>
-    </div>
+export const NewCommentForm = (article_id) => <Formik
+    onSubmit={(values, {resetForm}) => {
+            create(article_id.article_id,{"content" : values.content}).then(response =>{
+                alert("You add comment");
+                 resetForm({})
+            }
+        )
+    }}
+
+    render={({
+        values,
+        errors,
+        touched,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isSubmitting
+    }) => (
+            <form onSubmit={handleSubmit}>
+                <div className="row">
+                    <div className="col-sm-1" >
+                        <UserImg src={logo} alt="Logo" />
+                    </div>
+                    <div className="col-sm-10" >
+                        <InputComment name="content" onChange={handleChange} value={values.content || ''} placeholder="Add comment" />
+                    </div>
+                    <div className="col-sm-1"><ButtonComment type='submit'><i className="fas fa-plus-circle"></i></ButtonComment></div>
+                </div> </form>
+        )} />

@@ -81,6 +81,15 @@ class ArticleShow extends Component {
         )
     }
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps.match.params.itemId !== this.props.match.params.itemId) {
+            this.setState({ article : null})
+            get(nextProps.match.params.itemId).then(article => {
+                this.setState({ article })
+            })
+        }
+    }
+
     render() {
         const { article } = this.state
         return (
@@ -112,7 +121,7 @@ class ArticleShow extends Component {
                                     )}
                                 </CurrentUserConsumer>
                             </PanelNewArticle>
-                            <Comments comments={article.comments}/>
+                            <Comments comments={article.comments} article_id={article.id}/>
                         </div>
                         : <Loading />}
                 </div>

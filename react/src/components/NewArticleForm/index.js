@@ -138,7 +138,6 @@ class NewArticleForm extends Component {
         <Formik
           onSubmit={(values, { setSubmitting }) => {
               create({'tags':tags,'title': values.title,'body':body,'url':imagePreviewUrl}).then(response =>{
-              console.log(response)
             })
           }}
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { CurrentUserConsumer } from '../../context/CurrentUser.context'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import {Notification} from '../Notification'
 
 export const Nav = styled.ul`
     list-style-type: none;
@@ -65,7 +66,7 @@ class Navbar extends Component {
     render() {
         return (
             <CurrentUserConsumer>
-                {({ user, logout }) => (
+                {({ user, logout, notifications, notifications_count}) => (
                     <div>
                         {user ?
                             <Nav>
@@ -83,6 +84,23 @@ class Navbar extends Component {
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                         <Link to='#' className="dropdown-item" onClick={logout}>Logout</Link>
                                     </div>
+                                </NavLiRight>
+                                <NavLiRight>
+                                <div className="dropdown">
+                                    <span className="fa-stack fa-3x">
+                                        <i className="fa fa-comment fa-stack-2x"></i>
+                                        <strong className="fa-stack-1x fa-stack-text fa-inverse">{notifications_count}</strong>
+                                    </span>
+                                    <div className="dropdown-content">
+                                       {notifications? 
+                                         notifications.map(notification => {
+                                            return <Notification key={notification.id}  notification={notification}/>
+                                        }) 
+                                         :
+                                            ""
+                                        } 
+                                    </div>
+                                </div>   
                                 </NavLiRight>
                             </Nav>
                             :

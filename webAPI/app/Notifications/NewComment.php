@@ -26,12 +26,13 @@ class NewComment extends Notification implements ShouldQueue
     }
     public function via($notifiable)
     {
-        return ['database', 'broadcast'];
+        return [ 'broadcast'];
     }
     public function toArray($notifiable)
     {
         return [ 'article' =>[
-                'id' => $this->comment->article_id
+                'id' => $this->comment->article_id,
+                'title' => $this->comment->article->title
             ],
             'author' => [
                 'id' => $this->comment->user_id,
@@ -39,14 +40,12 @@ class NewComment extends Notification implements ShouldQueue
             ],
             'comment' => [
                 'id' => $this->comment->id,
+                'content' => $this->comment->content,
+                'created_at' => $this->comment->created_at
             ]
            ];
      }
 
-    public function toBroadcast($notifiable)
-    {
-        return new BroadcastMessage($this->toArray($notifiable));
-    }
 
     public function broadcastType()
     {

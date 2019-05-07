@@ -1,6 +1,7 @@
 const serverUrl = 'http://localhost:8000'
 
 export const articleApiUrl = id => id ? `${serverUrl}/articles/${id}` : `${serverUrl}/articles`
+export const commentUrl = id => `${serverUrl}/comment/${id}`
 export const loginUrl = `${serverUrl}/login`
 export const fbLoginUrl = `${serverUrl}/fbLogin`
 export const logoutUrl = `${serverUrl}/logout`

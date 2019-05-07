@@ -11,35 +11,21 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class CommentWasCreated
+class CommentWasCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $comment;
+    public $comment,$articleId;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment,int $articleId)
     {
         $this->comment = $comment;
+        $this->articleId = $articleId;
     }
-
-    public function broadcastWith()
-    {
-        return [
-            'comment' => $this->prepareData(),
-        ];
-    }
-
-    protected function prepareData()
-    {
-        return [
-            'content'   => $this->comment->content
-        ];
-    }
-
 
     /**
      * Get the channels the event should broadcast on.
@@ -48,6 +34,6 @@ class CommentWasCreated
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('comment');
+        return new PrivateChannel('article.comment.'.$this->articleId);
     }
 }
