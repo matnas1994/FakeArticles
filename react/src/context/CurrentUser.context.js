@@ -72,10 +72,12 @@ export class CurrentUserProvider extends Component {
     getFbUser = () => {
         window.FB.api('/me', { locale: 'en_US', fields: 'name, email' }, async user => {
             const result = await fbLogin({ ...user })
-            localStorage.setItem('api_token', result.user.api_token)
-            this.setState({ user })
-            this.connectToPusher()
-            this.getNotifiaction()
+            if(result.user){
+                localStorage.setItem('api_token', result.user.api_token)
+                this.setState({ user})
+                this.connectToPusher()
+                this.getNotifiaction()
+            }
         })
     }
 

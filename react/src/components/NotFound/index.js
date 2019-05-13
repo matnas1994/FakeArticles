@@ -1,31 +1,20 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
-import {  Panel , Header}  from '../../helpers/theme'
-class NotFound extends Component {
-    state = {
-        counter: 10
-    }
+import { Panel, Header } from '../../helpers/theme'
 
-    componentDidMount = () => {
-        const intervalId = setInterval(this.countdown, 1000)
-        this.setState({ intervalId })
-    }
-
-    countdown = () => this.setState({ counter: this.state.counter - 1 })
-
-    componentWillUnmount = () => clearInterval(this.state.intervalId)
-
-    render() {
-        const { location } = this.props
-        const { counter } = this.state
-        return (
-            <Panel>
-                <Header>No match for <code>{location.pathname}</code></Header>
-                <Header>Redirect to homepage in {counter} seconds</Header>
-                {counter === 0 && <Redirect to='/' />}
-            </Panel>
-        )
-    }
+const NotFound = ({ location }) => {
+    const [counter, setCounter] = useState(10)
+    const countdown = () => setCounter(counter - 1)
+    useEffect(() => {
+        const id = setInterval(countdown, 1000)
+        return () =>  clearTimeout(id)
+    }, [counter])
+    return (
+        <Panel>
+            <Header>No match for <code>{location.pathname}</code></Header>
+            <Header>Redirect to homepage in {counter} seconds</Header>
+            {counter === 0 && <Redirect to='/' />}
+        </Panel>
+    )
 }
-
 export default NotFound

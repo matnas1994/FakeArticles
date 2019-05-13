@@ -55,9 +55,9 @@ class Handler extends ExceptionHandler
                 'data' => 'Resource not found'
             ], 404);
         }
-      // if ($this->shouldReport($exception)) {
-     //       return response()->json(['error' => 'Sorry, something went wrong.'],500);
-     //   }
+      /* if ($this->shouldReport($exception)) {
+           return response()->json(['error' => 'Sorry, something went wrong.'],500);
+        }*/
 
         return parent::render($request, $exception);
     }

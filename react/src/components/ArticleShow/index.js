@@ -9,6 +9,7 @@ import { withRouter } from 'react-router-dom'
 import Comments from '../Comments'
 import Loading from '../Loading'
 import $ from 'jquery'
+import Tags from '../Tags'
 
 const StyledLink = styled(Link)`
     color: #faf65a;
@@ -102,6 +103,7 @@ class ArticleShow extends Component {
                                 <Header>{article.title}</Header>
                                 <TextArticle dangerouslySetInnerHTML={this.convertToHtml(article.body)}></TextArticle>
                                 <TextArticle>Author: {article.user.name}</TextArticle>
+                                <Tags tags={article.tags}/>
                                 <CurrentUserConsumer>
                                     {({ user, isAdmin }) => (
                                         <div>

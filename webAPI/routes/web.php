@@ -22,6 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('tags', 'TagController@index');
 Route::get('articles', 'ArticleController@index');
 Route::middleware('auth:api')->post('articles', 'ArticleController@store');
 Route::get('articles/{article}', 'ArticleController@show');

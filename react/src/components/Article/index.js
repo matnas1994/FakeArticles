@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Header, PanelArticle } from '../../helpers/theme'
-import Truncate from 'react-truncate-html';
-
+import Truncate from 'react-truncate-html'
+import Tags from '../Tags'
 
 const StyledLogo = styled.img`
     border-radius: 8px;
@@ -40,6 +40,7 @@ class Article extends Component {
                         __html: this.props.body
                     }}
                 />
+                <Tags tags={this.props.tags}/>
             </PanelArticle>
         )
     }

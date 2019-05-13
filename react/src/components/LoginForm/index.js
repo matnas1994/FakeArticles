@@ -40,6 +40,22 @@ class LoginForm extends Component {
                                     await login(values)
                                     setSubmitting(false)
                                 }}
+                                 validate = {(values) => {
+                                    let errors = {};
+
+                                    if (!values.email) {
+                                      errors.email = 'Required';
+                                    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                                      errors.email = 'Invalid email address';
+                                    }
+
+                                    if (!values.password) {
+                                        errors.password = 'Required';
+                                    }
+
+                                    return errors;
+                                }}
+
                                 render={({
                                     values,
                                     errors,
@@ -50,10 +66,12 @@ class LoginForm extends Component {
                                     isSubmitting
                                 }) => (
                                         <form onSubmit={handleSubmit}>
+                                            <ErrorMsg>{errors.email}</ErrorMsg>
                                             <InputContainer>
                                                 <Icon className="fas fa-user"></Icon>
                                                 <TextInput name='email' onChange={handleChange} placeholder="Email" value={values.email || ''} />
                                             </InputContainer>
+                                            <ErrorMsg>{errors.password}</ErrorMsg>
                                             <InputContainer>
                                                 <Icon className="fas fa-lock"></Icon>
                                                 <TextInput name='password' type="password" placeholder="Password" onChange={handleChange} />
@@ -66,7 +84,7 @@ class LoginForm extends Component {
                                             <LoginHr/>
                                             <FacebookLoginButton onClick={fbLogin}/>
                                         </form>
-                                    )}     
+                                    )}
                             />
                         </Panel>
                     </div>

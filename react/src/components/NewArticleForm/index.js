@@ -5,7 +5,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import styled from 'styled-components'
 import { WithContext as ReactTags } from 'react-tag-input';
 import { Formik } from 'formik'
-import {create} from '../../helpers/articlesApi'
+import { create } from '../../helpers/articlesApi'
+import { getAll } from '../../helpers/tagsApi'
 
 const KeyCodes = {
   comma: 188,
@@ -43,27 +44,25 @@ const StyledLogo = styled.img`
     width: 100% 
 `
 
+
 class NewArticleForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      tags: [
-        { id: "Thailand", text: "Thailand" },
-        { id: "India", text: "India" }
-      ],
-      suggestions: [
-        { id: 'USA', text: 'USA' },
-        { id: 'Germany', text: 'Germany' },
-        { id: 'Austria', text: 'Austria' },
-        { id: 'Costa Rica', text: 'Costa Rica' },
-        { id: 'Sri Lanka', text: 'Sri Lanka' },
-        { id: 'Thailand', text: 'Thailand' }
-      ]
+      tags: [],
+      suggestions: []
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleAddition = this.handleAddition.bind(this);
     this.handleDrag = this.handleDrag.bind(this);
+  }
+
+  componentDidMount(){
+    getAll().then(response => {
+      let suggestions = response.map((suggestion) => {return {"id" : suggestion.text, 'text': suggestion.text }});
+      this.setState({ suggestions })
+    })
   }
 
   handleDelete(i) {
@@ -84,7 +83,6 @@ class NewArticleForm extends Component {
     newTags.splice(currPos, 1);
     newTags.splice(newPos, 0, tag);
 
-    // re-render
     this.setState({ tags: newTags });
   }
 
@@ -123,7 +121,7 @@ class NewArticleForm extends Component {
 
 
   render() {
-    const { tags, suggestions , body} = this.state
+    const { tags, suggestions, body } = this.state
     let { imagePreviewUrl } = this.state;
     let imagePreview = null;
 
@@ -136,8 +134,9 @@ class NewArticleForm extends Component {
     return (
       <div>
         <Formik
-          onSubmit={(values, { setSubmitting }) => {
-              create({'tags':tags,'title': values.title,'body':body,'url':imagePreviewUrl}).then(response =>{
+          onSubmit={(values) => {
+            create({ 'tags': tags, 'title': values.title, 'body': body, 'url': imagePreviewUrl }).then(response => {
+              console.log(response)
             })
           }}
 
@@ -191,13 +190,11 @@ class NewArticleForm extends Component {
                       console.log('Editor is ready to use!', editor);
                     }}
                     onChange={(event, editor) => {
-                      this.setState({body: editor.getData()})
+                      this.setState({ body: editor.getData() })
                     }}
-                    onBlur={editor => {
-                      console.log('Blur.', editor);
+                    onBlur={editor => { 
                     }}
                     onFocus={editor => {
-                      console.log('Focus.', editor);
                     }}
                   />
                   <LoginButton type='submit'>Add new</LoginButton>

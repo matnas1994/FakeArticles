@@ -166,7 +166,7 @@ class Articles extends Component {
     const currentArticles = articles.slice(indexOfFirstArticle, indexOfLastArticle);
 
     const renderArticles = currentArticles.map(article => {
-      return <Article destroy={this.destroyArticle} id={article.id} key={article.id} title={article.title} body={article.body} author={article.user.name} author_id={article.user.id} image ={article.image?article.image.url:logo}/>
+      return <Article destroy={this.destroyArticle} id={article.id} key={article.id} title={article.title} body={article.body} author={article.user.name} author_id={article.user.id} image ={article.image?article.image.url:logo} tags={article.tags}/>
     });
 
     const pageNumbers = [];

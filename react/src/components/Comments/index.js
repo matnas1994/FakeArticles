@@ -29,10 +29,10 @@ class Comments extends Component {
             });
     }
 
-    componentWillUpdate(){
-        window.Echo.leaveChannel('article.comment.'+ this.props.article_id)
+    componentWillUpdate() {
+        window.Echo.leaveChannel('article.comment.' + this.props.article_id)
     }
-    
+
     render() {
         const renderComments = this.state.comments.map(comment => {
             return <Comment key={comment.id} content={comment.content} author={comment.user.name} created_at={comment.created_at} />
@@ -40,7 +40,7 @@ class Comments extends Component {
 
         return (
             <PanelNewArticle>
-                <NewCommentForm article_id={this.props.article_id}/>
+                <NewCommentForm article_id={this.props.article_id} />
                 {renderComments}
             </PanelNewArticle>
         )

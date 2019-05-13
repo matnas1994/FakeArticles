@@ -3,12 +3,6 @@ body{
   background-size: cover;
 }
 
-@-webkit-keyframes bounce {
-  100% {
-    top: 4px;
-  }
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
@@ -183,6 +177,12 @@ body{
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes bounce {
+  100% {
+    top: 4px;
   }
 }
 

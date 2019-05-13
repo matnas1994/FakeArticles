@@ -31,6 +31,7 @@ class VerifyCsrfToken extends Middleware
         'password/reset',
         'comment',
         'broadcasting/auth',
-        'comment/*'
+        'comment/*',
+        'tag/*'
     ];
 }
